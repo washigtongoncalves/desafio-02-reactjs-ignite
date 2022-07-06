@@ -9,21 +9,17 @@ import '../styles/content.scss';
 
 interface ContentProps {
   selectedGenreId: number;
+  selectedGenre: Genre
 }
 
-export function Content({ selectedGenreId }: ContentProps) {
+export function Content({ selectedGenreId, selectedGenre }: ContentProps) {
   
   const [movies, setMovies] = useState<Movie[]>([]);
-  const [selectedGenre, setSelectedGenre] = useState<Genre>({} as Genre);
-
+  
   useEffect(() => {
     api.get<Movie[]>(`movies/?Genre_id=${selectedGenreId}`).then(response => {
       setMovies(response.data);
     });
-
-    api.get<Genre>(`genres/${selectedGenreId}`).then(response => {
-      setSelectedGenre(response.data);
-    })
   }, [selectedGenreId]);
 
 
